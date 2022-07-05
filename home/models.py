@@ -176,7 +176,7 @@ class SystemUser(AbstractUser):
     createby = models.IntegerField("创建人", null=True)
     updated = models.DateTimeField("更新时间", auto_now=True, null=True)
     updateby = models.IntegerField("更新人", null=True)
-    remove = models.CharField("移除标志", max_length=1, choices=REMOVE_ITEMS)
+    remove = models.CharField("移除标志", max_length=1, choices=REMOVE_ITEMS, default='n')
 
     datafilter = models.CharField("数据过滤", max_length=200, null=True)
     theme = models.CharField("主题", max_length=45, null=True)

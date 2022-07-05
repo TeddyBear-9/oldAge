@@ -17,3 +17,5 @@ class OldPersonAdmin(admin.ModelAdmin):
 
 admin.site.register(models.OldPerson, OldPersonAdmin)
 admin.site.register(models.SystemUser)
+admin.site.register(models.Employee)
+admin.site.register(models.Volunteer)

@@ -27,23 +27,21 @@ class OldPersonSerializer(serializers.ModelSerializer):
         password = data.get("password", None)
 
 
+class EmpolyeeSerializer(serializers.ModelSerializer):
 
-# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-#     """
-#     自定义登录认证，使用自有用户表
-#     """
-#     username_field = 'username'
-#
-#     def validate(self, attrs):
-#         authenticate_kwargs = {self.username_field: attrs[self.username_field], 'password': attrs['password']}
-#         print(authenticate_kwargs)
-#         try:
-#             user = SystemUser.objects.get(**authenticate_kwargs)
-#         except Exception as e:
-#             raise exceptions.NotFound(e.args[0])
-#
-#         refresh = self.get_token(user)
-#
-#         data = {"userId": user.id, "token": str(refresh.access_token), "refresh": str(refresh)}
-#         return data
+    class Meta:
+        model = Employee
+        fields = "__all__"
+        read_only = [
+            'id'
+        ]
 
+
+class VolunteerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Volunteer
+        fields = "__all__"
+        read_only = [
+            'id'
+        ]
