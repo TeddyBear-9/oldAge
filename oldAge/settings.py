@@ -232,7 +232,7 @@ CORS_ALLOW_HEADERS = (
     'XMLHttpRequest',
     'X_FILENAME',
     'accept-encoding',
-    'authorization',
+    'Authorization',
     'content-type',
     'dnt',
     'origin',
