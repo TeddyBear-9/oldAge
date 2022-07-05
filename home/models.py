@@ -44,7 +44,7 @@ class OldPerson(models.Model):
 
     health_state = models.CharField(max_length=50, verbose_name="老人健康状态", null=True, blank=True)
     description = models.CharField(max_length=50, verbose_name="描述", null=True, blank=True)
-    isactive = models.CharField(max_length=1, verbose_name="是否有效", default="y", choices=SEX_ITEMS)
+    isactive = models.CharField(max_length=1, verbose_name="是否有效", default="y", choices=ACTIVE_ITEMS)
     created = models.DateTimeField(auto_now_add=True, verbose_name="创建日期")
     createby = models.IntegerField(verbose_name="创建人", null=True, blank=True)
     updated = models.DateTimeField(auto_now=True, verbose_name="更新时间", null=True, blank=True)
