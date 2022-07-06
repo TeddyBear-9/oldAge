@@ -105,14 +105,14 @@ class Volunteer(models.Model):
     birthday = models.DateField(default="1950-01-01", verbose_name="义工生日", null=True)
     checkin_data = models.DateTimeField(verbose_name="访问日期", null=True)
     checkout_data = models.DateTimeField(verbose_name="离开日期", null=True)
-    profile_photo = models.ImageField('义工头像', upload_to='photo/volunteer', default='')
+    profile_photo = models.ImageField('义工头像', upload_to='photo/volunteer', default='', blank=True, null=True)
 
-    description = models.CharField("描述", max_length=50, null=True)
+    description = models.CharField("描述", max_length=50, blank=True, null=True)
     isactive = models.CharField("是否有效", max_length=10, choices=EMPLOYEE_ACTIVE_ITEMS, default="在职")
     created = models.DateTimeField("创建时间", auto_now_add=True)
-    createby = models.IntegerField("创建人", null=True)
+    createby = models.IntegerField("创建人", blank=True, null=True)
     updated = models.DateTimeField("更新时间", auto_now=True, null=True)
-    updateby = models.IntegerField("更新人", null=True)
+    updateby = models.IntegerField("更新人", blank=True, null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
 
     @classmethod
