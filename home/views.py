@@ -25,7 +25,7 @@ class OldPersonModelView(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.remove = 'y'
+        instance.remove = '已删除'
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -36,7 +36,7 @@ class EmployeeModelView(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.remove = 'y'
+        instance.remove = '已删除'
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -47,7 +47,7 @@ class VolunteerModelView(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.remove = 'y'
+        instance.remove = '已删除'
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
