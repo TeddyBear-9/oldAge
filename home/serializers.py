@@ -22,10 +22,6 @@ class OldPersonSerializer(serializers.ModelSerializer):
             'id'
         ]
 
-    def validate(self, data):
-        email = data.get("email", None)
-        password = data.get("password", None)
-
 
 class EmpolyeeSerializer(serializers.ModelSerializer):
 
