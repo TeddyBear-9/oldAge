@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework import viewsets, status
 from rest_framework import permissions
@@ -11,12 +12,14 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, C
 from .serializers import *
 
 
-class TestView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = (authentication.JWTAuthentication,)
+def index(request):
+    return render(request, 'chat/index.html')
 
-    def get(self, request, *args, **kwargs):
-        return Response('ok')
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {
+        'room_name': room_name
+    })
 
 
 class OldPersonModelView(ModelViewSet):
