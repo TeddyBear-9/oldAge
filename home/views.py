@@ -12,7 +12,8 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, C
 from .serializers import *
 
 
-
+def index(request):
+    return render(request, 'chat/index.html', {})
 
 
 class OldPersonModelView(ModelViewSet):

@@ -244,3 +244,22 @@ CACHES = {
         'LOCATION': 'oldAge-Cache',
     }
 }
+
+# 使用Redis做后台
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get("REDIS_URL", 'redis://127.0.0.1:6379/2')],
+        },
+    }
+}
+
+# Celery配置
+CELERY_BROKEN_URL = 'redis://127.0.0.1:6379/0'
+CELERY_TIMEZONE = TIME_ZONE
+
+# celery内容等消息的格式设置，默认json
+CELERY_ACCEPT_CONTENT = {'application/json'}
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
