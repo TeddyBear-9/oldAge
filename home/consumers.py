@@ -3,7 +3,7 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from . import tasks
 from asgiref.sync import async_to_sync
-
+from CV.Interface import collectingInterface as base_2_img
 COMMANDS = {
     'help': {
         'help': '命令帮助信息.',
@@ -19,7 +19,6 @@ COMMANDS = {
     #     'task': 'search'
     # },
 }
-
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -74,3 +73,52 @@ class BotConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({
             'message': f'[机器人]: {message}'
         }))
+
+
+# 检测的人员类型
+person_type_list = [
+    'old_people',
+    'volunteer',
+    'employee',
+]
+
+
+class FaceRegConsumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
+
+    def disconnect(self, code):
+        pass
+
+    def receive(self, text_data=None, bytes_data=None):
+        text_data_json = json.loads(text_data)
+        try:
+            base64_arr = text_data_json['base64']
+            person_id = text_data_json['id']
+            person_type = text_data_json['type']
+            if person_type in person_type_list:
+                for base64 in base64_arr:
+                    base_2_img.facecollecting(person_id, person_type, base64_arr)
+                async_to_sync(self.channel_layer.send)(
+                    self.channel_name,
+                    {
+                        'type': 'success',
+                    }
+                )
+            else:
+                async_to_sync(self.channel_layer.send)(
+                    self.channel_name,
+                    {
+                        'type': 'error',
+                        'message': '请向开发人员确定人员类型是否填写正确'
+                    }
+                )
+
+        except KeyError:
+            async_to_sync(self.channel_layer.send)(
+                self.channel_name,
+                {
+                    'type': 'error',
+                    'message': '请确定填充了id,type,base64字段'
+                }
+            )

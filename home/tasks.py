@@ -1,8 +1,7 @@
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
-from parsel import Selector
-import requests
+
 
 channel_layer = get_channel_layer()
 
@@ -13,8 +12,13 @@ def add(channel_name, x, y):
     message = '{}+{}={}'.format(x, y, int(x) + int(y))
     async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": message})
     print(message)
-#
-#
+
+
+@shared_task
+def face_reg(channel_name, base64_arr):
+    pass
+
+
 # @shared_task
 # def search(channel_name, name):
 #     spider = PoemSpider(name)
