@@ -3,7 +3,7 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from . import tasks
 from asgiref.sync import async_to_sync
-from CV.Interface import collectingInterface as base_2_img
+# from CV.Interface import collectingInterface as base_2_img
 COMMANDS = {
     'help': {
         'help': '命令帮助信息.',
@@ -97,8 +97,8 @@ class FaceRegConsumer(WebsocketConsumer):
             person_id = text_data_json['id']
             person_type = text_data_json['type']
             if person_type in person_type_list:
-                for base64 in base64_arr:
-                    base_2_img.facecollecting(person_id, person_type, base64_arr)
+                # for base64 in base64_arr:
+                    # base_2_img.facecollecting(person_id, person_type, base64_arr)
                 async_to_sync(self.channel_layer.send)(
                     self.channel_name,
                     {
