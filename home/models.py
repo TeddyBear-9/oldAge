@@ -132,13 +132,13 @@ class Volunteer(models.Model):
 
 class Event(models.Model):
     EVENT_ITEMS = [
-        (0, "情感检测"),
-        (1, "义工交互检测"),
-        (2, "陌生人检测"),
-        (3, "摔倒检测"),
-        (4, "禁止区域入侵检测"),
+        ("情感检测", "情感检测"),
+        ("义工交互检测", "义工交互检测"),
+        ("陌生人检测", "陌生人检测"),
+        ("摔倒检测", "摔倒检测"),
+        ("禁止区域入侵检测", "禁止区域入侵检测"),
     ]
-    event_type = models.IntegerField(choices=EVENT_ITEMS)
+    event_type = models.CharField(max_length=20, choices=EVENT_ITEMS)
     event_date = models.DateTimeField(auto_now_add=True)
     event_location = models.CharField(max_length=200, null=True)
     event_desc = models.CharField(max_length=200, null=True)
