@@ -16,7 +16,7 @@ def add(channel_name, x, y):
 @shared_task
 def face_reg(channel_name, pid, type, base64_arr):
     instance = None
-    print("before type confirm")
+    print(type)
     if type == 'old_people':
         instance = OldPerson.objects.get(pk=pid)
     elif type == 'volunteer':
@@ -26,7 +26,8 @@ def face_reg(channel_name, pid, type, base64_arr):
     if not instance:
         async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": "The person type is illegal"})
     else:
-        print("before change data")
+        print(instance)
+        print("before save")
         instance.data = {
             'base64': base64_arr
         }
