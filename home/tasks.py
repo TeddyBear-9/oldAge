@@ -23,7 +23,9 @@ def face_reg(channel_name, pid, type, base64_arr):
         instance = Volunteer.objects.get(pk=pid)
     elif type == 'employee':
         instance = Employee.objects.get(pk=pid)
+
     if not instance:
+        print("person type error")
         async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": "The person type is illegal"})
     else:
 
