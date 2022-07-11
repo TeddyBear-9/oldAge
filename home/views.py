@@ -94,8 +94,8 @@ class RegisterView(CreateAPIView):
 class EventModelView(ModelViewSet):
     queryset = Event.get_all()
     serializer_class = EventSerializer
-    permission_classes = None
-    authentication_classes = None
+    permission_classes = []
+    authentication_classes = []
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
