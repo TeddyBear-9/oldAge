@@ -43,6 +43,11 @@ class OldPersonSerializer(serializers.ModelSerializer):
         ]
 
 
+class ImgSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    username = serializers.CharField()
+    data = serializers.JSONField()
+
 class EmpolyeeSerializer(serializers.ModelSerializer):
 
     class Meta:

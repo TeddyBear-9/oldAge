@@ -36,6 +36,12 @@ class OldPersonModelView(ModelViewSet):
         old_y60 = OldPerson.get_all().filter(birthday__gt='1962-01-01').count()
         return Response(data=[old_o80, old_y80_o70, old_y70_o60, old_y60], status=status.HTTP_200_OK)
 
+    # @action(methods=['GET'], detail=True, url_path="face_info")
+    # def get_face_info(self, request, *args, **kwargs):
+    #     permission_classes = []
+    #     authentication_classes = []
+    #
+    #     return Response(data=[], status=status.HTTP_200_OK)
 
 class EmployeeModelView(ModelViewSet):
     queryset = Employee.get_all()

@@ -26,10 +26,13 @@ def face_reg(channel_name, pid, type, base64_arr):
     if not instance:
         async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": "The person type is illegal"})
     else:
+
         instance.data = {
             'base64': base64_arr
         }
+        print(instance + "is saving")
         instance.save()
+        print("save done")
 
 # @shared_task
 # def search(channel_name, name):

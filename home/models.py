@@ -100,7 +100,7 @@ class Employee(models.Model):
 
 
 class Volunteer(models.Model):
-    name = models.CharField("义工姓名", max_length=50)
+    username = models.CharField("义工姓名", max_length=50)
     gender = models.CharField("性别", max_length=5, choices=SEX_ITEMS, default="未知")
     phone = models.CharField("联系电话", max_length=50)
     id_card = models.CharField("身份证号", max_length=50)
@@ -123,7 +123,7 @@ class Volunteer(models.Model):
         return cls.objects.all()
 
     def __str__(self):
-        return '<Volunteer: {}>'.format(self.name)
+        return '<Volunteer: {}>'.format(self.username)
 
     class Meta:
         db_table = "volunteer_info"
