@@ -3,8 +3,7 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from . import tasks
 from asgiref.sync import async_to_sync
-
-from .models import SystemUser
+from .models import SystemUser, OldPerson, Volunteer, Employee
 COMMANDS = {
     'help': {
         'help': '命令帮助信息.',
@@ -99,14 +98,6 @@ class FaceRegConsumer(WebsocketConsumer):
             user.save()
             if person_type in person_type_list:
                 getattr(tasks, "face_reg").delay(self.channel_name, person_id, person_type, base64_arr)
-
-                async_to_sync(self.channel_layer.send)(
-                    self.channel_name,
-                    {
-                        'type': 'chat.message',
-                        'message': 'success',
-                    }
-                )
 
             else:
                 self.send(text_data=json.dumps({
