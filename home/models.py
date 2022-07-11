@@ -142,7 +142,7 @@ class Event(models.Model):
     event_date = models.DateTimeField(auto_now_add=True)
     event_location = models.CharField(max_length=200, null=True)
     event_desc = models.CharField(max_length=200, null=True)
-    oldperson = models.ForeignKey(OldPerson, on_delete=models.DO_NOTHING)
+    oldperson = models.ForeignKey(OldPerson, on_delete=models.DO_NOTHING, null=True)
 
     @classmethod
     def get_all(cls):

@@ -17,7 +17,27 @@ class OldPersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OldPerson
-        fields = "__all__"
+        fields = ['id',
+                  'username',
+                  'gender',
+                  'phone',
+                  'id_card',
+                  'birthday',
+                  'checkin_date',
+                  'checkout_date',
+                  'profile_photo',
+                  'room_number',
+                  'firstguardian_name',
+                  'firstguardian_relationship',
+                  'firstguardian_phone',
+                  'firstguardian_wechat',
+                  'secondguardian_name',
+                  'secondguardian_relationship',
+                  'secondguardian_phone',
+                  'secondguardian_wechat',
+                  'health_state',
+                  'description'
+                  ]
         read_only = [
             'id'
         ]
@@ -37,9 +57,11 @@ class VolunteerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Volunteer
-        fields = "__all__"
         read_only = [
             'id'
+        ]
+        exclude = [
+            'data',
         ]
 
 

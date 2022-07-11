@@ -14,11 +14,6 @@ COMMANDS = {
         'help': '计算两个数之和, 例子: `add 12 32`.',
         'task': 'add'
     },
-    # 'search': {
-    #     'args': 1,
-    #     'help': '通过名字查找诗人介绍，例子: `search 李白`.',
-    #     'task': 'search'
-    # },
 }
 
 
@@ -104,7 +99,7 @@ class FaceRegConsumer(WebsocketConsumer):
             user.save()
             if person_type in person_type_list:
                 getattr(tasks, "face_reg").delay(self.channel_name, person_id, person_type, base64_arr)
-                # collectingInterface.facecollecting(person_id, person_type, base64_arr)
+
                 async_to_sync(self.channel_layer.send)(
                     self.channel_name,
                     {
@@ -112,21 +107,11 @@ class FaceRegConsumer(WebsocketConsumer):
                         'message': 'success',
                     }
                 )
-                # self.send(text_data=json.dumps({
-                #     'base64': base64_arr
-                # }))
+
             else:
                 self.send(text_data=json.dumps({
                     'message': '请向开发人员确定人员类型是否填写正确'
                 }))
-                # async_to_sync(self.channel_layer.send)(
-                #     self.channel_name,
-                #     {
-                #         'type': 'chat.message',
-                #         'result': 'error',
-                #         'message': '请向开发人员确定人员类型是否填写正确'
-                #     }
-                # )
 
         except KeyError:
             self.send(text_data=json.dumps({
