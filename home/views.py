@@ -89,3 +89,17 @@ class RegisterView(CreateAPIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(data=serializers.data, status=status.HTTP_200_OK)
+
+
+class EventModelView(ModelViewSet):
+    queryset = Event.get_all()
+    serializer_class = EventSerializer
+    permission_classes = None
+    authentication_classes = None
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.remove = '已删除'
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

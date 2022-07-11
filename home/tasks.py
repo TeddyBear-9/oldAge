@@ -1,22 +1,35 @@
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
-
+from .models import OldPerson, Volunteer, Employee
 
 channel_layer = get_channel_layer()
 
 
 @shared_task
 def add(channel_name, x, y):
-    print("shared_task add")
     message = '{}+{}={}'.format(x, y, int(x) + int(y))
     async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": message})
     print(message)
 
 
 @shared_task
-def face_reg(channel_name, base64_arr):
-    pass
+def face_reg(channel_name, pid, type, base64_arr):
+    instance = None
+    if type == 'old_people':
+        instance = OldPerson.objects.get(pk=pid)
+    elif type == 'volunteer':
+        instance = Volunteer.objects.get(pk=pid)
+    elif type == 'employee':
+        instance = Employee.objects.get(pk=pid)
+    if not instance:
+        async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": "The person type is illegal"})
+    else:
+        instance.data = {
+            'base64': base64_arr
+        }
+        instance.save()
+
 
 
 # @shared_task

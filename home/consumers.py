@@ -3,7 +3,8 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from . import tasks
 from asgiref.sync import async_to_sync
-# from CV.Interface import collectingInterface as base_2_img
+
+from .models import SystemUser
 COMMANDS = {
     'help': {
         'help': '命令帮助信息.',
@@ -19,6 +20,7 @@ COMMANDS = {
     #     'task': 'search'
     # },
 }
+
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -94,31 +96,47 @@ class FaceRegConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         try:
             base64_arr = text_data_json['base64']
-            person_id = text_data_json['id']
+            user_id = text_data_json['uid']
+            person_id = text_data_json['pid']
             person_type = text_data_json['type']
+            user = SystemUser.objects.get(pk=user_id)
+            user.face_channel_name = self.channel_name
+            user.save()
             if person_type in person_type_list:
-                # for base64 in base64_arr:
-                    # base_2_img.facecollecting(person_id, person_type, base64_arr)
+                getattr(tasks, "face_reg").delay(self.channel_name, person_id, person_type, base64_arr)
+                # collectingInterface.facecollecting(person_id, person_type, base64_arr)
                 async_to_sync(self.channel_layer.send)(
                     self.channel_name,
                     {
-                        'type': 'success',
+                        'type': 'chat.message',
+                        'message': 'success',
                     }
                 )
+                # self.send(text_data=json.dumps({
+                #     'base64': base64_arr
+                # }))
             else:
-                async_to_sync(self.channel_layer.send)(
-                    self.channel_name,
-                    {
-                        'type': 'error',
-                        'message': '请向开发人员确定人员类型是否填写正确'
-                    }
-                )
+                self.send(text_data=json.dumps({
+                    'message': '请向开发人员确定人员类型是否填写正确'
+                }))
+                # async_to_sync(self.channel_layer.send)(
+                #     self.channel_name,
+                #     {
+                #         'type': 'chat.message',
+                #         'result': 'error',
+                #         'message': '请向开发人员确定人员类型是否填写正确'
+                #     }
+                # )
 
         except KeyError:
-            async_to_sync(self.channel_layer.send)(
-                self.channel_name,
-                {
-                    'type': 'error',
-                    'message': '请确定填充了id,type,base64字段'
-                }
-            )
+            self.send(text_data=json.dumps({
+                'message': 'id, type, base64 are expected'
+            }))
+
+    def chat_message(self, event):
+        message = event['message']
+
+        # Send message to WebSocket
+        self.send(text_data=json.dumps({
+            'message': f'{message}'
+        }))

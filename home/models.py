@@ -35,6 +35,7 @@ class OldPerson(models.Model):
     # imgset_dir = models.CharField(max_length=200)
     # profile_photo = models.CharField(max_length=200)
     room_number = models.CharField(max_length=50, verbose_name="房间号", null=True, blank=True)
+    data = models.JSONField("人脸数据", null=True, blank=True)
 
     firstguardian_name = models.CharField(max_length=50, null=True, blank=True, verbose_name="第一监护人姓名")
     firstguardian_relationship = models.CharField(max_length=50, verbose_name="与第一监护人关系", null=True, blank=True)
@@ -84,6 +85,7 @@ class Employee(models.Model):
     updated = models.DateTimeField("更新时间", auto_now=True, null=True)
     updateby = models.IntegerField("更新人", null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
+    data = models.JSONField("人脸数据", null=True, blank=True)
 
     @classmethod
     def get_all(cls):
@@ -114,6 +116,7 @@ class Volunteer(models.Model):
     updated = models.DateTimeField("更新时间", auto_now=True, null=True)
     updateby = models.IntegerField("更新人", blank=True, null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
+    data = models.JSONField("人脸数据", null=True, blank=True)
 
     @classmethod
     def get_all(cls):
@@ -164,6 +167,14 @@ class OldPersonManager(UserManager):
         super().create_superuser(username=real_name, password=password, email=email, **extra_fields)
 
 
+class Connector(models.Model):
+    face_ws_url = models.URLField("人脸检测websocketURL", max_length=100, default="ws://39.105.102.68:8000/ws/chat/")
+    face_channel_name = models.CharField("人脸wb通话名", max_length=100, null=True, blank=True, help_text="用于处理信号机制时，发送wb消息")
+
+    class Meta:
+        db_table = "connector_info"
+        verbose_name_plural = "连接信息"
+
 class SystemUser(AbstractUser):
     # 用于权限认证的user一对一关联
     # auth_user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -173,6 +184,12 @@ class SystemUser(AbstractUser):
     gender = models.CharField("性别", max_length=5, choices=SEX_ITEMS, default="未知")
     email = models.CharField("注册邮箱", max_length=50, unique=True)
     phone = models.CharField("手机号码", max_length=50, blank=True, null=True)
+    connetion = models.OneToOneField(
+        Connector,
+        on_delete=models.CASCADE,
+        auto_created=True,
+        null=True
+    )
 
     description = models.CharField("描述", max_length=50, null=True, blank=True)
     isactive = models.CharField("是否有效", max_length=10, choices=EMPLOYEE_ACTIVE_ITEMS, default="在职")
@@ -188,6 +205,8 @@ class SystemUser(AbstractUser):
     logoimage = models.CharField("Logo", max_length=45, blank=True, null=True)
     appversion = models.CharField("app版本", max_length=10, blank=True, null=True)
     jsonauth = models.CharField("app版本控制，json串中的权限点配置", max_length=1000, blank=True, null=True)
+    face_channel_name = models.CharField("人脸wb通话名", max_length=100, null=True, blank=True, help_text="用于处理信号机制时，发送wb消息")
+
 
     USERNAME_FIELD = 'email'
     objects = OldPersonManager()
@@ -212,4 +231,3 @@ class SystemUser(AbstractUser):
         verbose_name_plural = "系统用户信息"
 
     REQUIRED_FIELDS = ['real_name']
-

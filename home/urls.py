@@ -9,6 +9,7 @@ router = DefaultRouter()
 router.register("oldperson", views.OldPersonModelView, "oldperson")
 router.register("employee", views.EmployeeModelView, "employee")
 router.register("volunteer", views.VolunteerModelView, "volunteer")
+router.register("event", views.EventModelView, "event")
 
 urlpatterns = [
 
