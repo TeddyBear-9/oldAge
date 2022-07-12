@@ -12,6 +12,8 @@ channel_layer = get_channel_layer()
 @receiver(post_save, sender=Event)
 def send_notification(sender, **kwargs):
     channel_name = SystemUser.objects.get(pk=2).room_channel_name
+    if channel_name is None:
+        return
     instance = kwargs.get("instance")
     print(instance)
     event_data = EventSerializer(instance).data

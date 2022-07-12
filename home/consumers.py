@@ -138,9 +138,7 @@ class RoomEventConsumer(WebsocketConsumer):
         if event_data is None:
             event_data = "empty event"
 
-        self.send(text_data=json.dumps({
-            'event_info': f'{event_data}'
-        }))
+        self.send(text_data=event_data)
 
 
 def send_event(channel_name, event_data):
