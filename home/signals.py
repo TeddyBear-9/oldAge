@@ -9,7 +9,7 @@ from .serializers import EventSerializer
 channel_layer = get_channel_layer()
 
 
-@receiver(post_init, sender=Event)
+@receiver(post_save, sender=Event)
 def send_notification(sender, **kwargs):
     channel_name = SystemUser.objects.get(pk=2).room_channel_name
     instance = kwargs.get("instance")
