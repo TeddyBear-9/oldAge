@@ -3,6 +3,7 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from . import tasks
 from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from .models import SystemUser, OldPerson, Volunteer, Employee
 COMMANDS = {
     'help': {
@@ -15,7 +16,7 @@ COMMANDS = {
     },
 }
 
-
+channel_layer = get_channel_layer()
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
@@ -113,7 +114,35 @@ class FaceRegConsumer(WebsocketConsumer):
             'message': f'{message}'
         }))
 
-# class RoomEventConsumer(WebsocketConsumer):
-#     def connect(self):
-#         pass
 
+class RoomEventConsumer(WebsocketConsumer):
+    def connect(self):
+        user = SystemUser.objects.get(pk=2)
+        user.room_channel_name = self.channel_name
+        user.save()
+        self.accept()
+
+    def disconnect(self, close_code):
+        user = SystemUser.objects.get(pk=2)
+        user.room_channel_name = None
+        user.save()
+        pass
+
+    def receive(self, text_data=None, bytes_data=None):
+
+        # Send message to WebSocket
+        self.send(text_data=text_data)
+
+    def send_event(self, event):
+        event_data = event['event']
+        if event_data is None:
+            event_data = "empty event"
+
+        self.send(text_data=json.dumps({
+            'event': f'{event_data}'
+        }))
+
+
+def send_event(channel_name, event_data):
+    async_to_sync(channel_layer.send)(channel_name,
+                                      {"type": "send_event", "event": event_data})
