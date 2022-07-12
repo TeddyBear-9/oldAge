@@ -139,7 +139,7 @@ class RoomEventConsumer(WebsocketConsumer):
             event_data = "empty event"
 
         self.send(text_data=json.dumps({
-            'event': f'{event_data}'
+            'event_info': f'{event_data}'
         }))
 
 
