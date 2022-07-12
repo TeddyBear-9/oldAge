@@ -55,6 +55,7 @@ class OldPerson(models.Model):
     updated = models.DateTimeField(auto_now=True, verbose_name="更新时间", null=True, blank=True)
     updateby = models.IntegerField(verbose_name="更新人", null=True, blank=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
+    face_colleceted = models.BooleanField("人脸信息是否已被采集", blank=True, default=False)
 
     @classmethod
     def get_all(cls):
@@ -86,6 +87,7 @@ class Employee(models.Model):
     updateby = models.IntegerField("更新人", null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
     data = models.JSONField("人脸数据", null=True, blank=True)
+    face_colleceted = models.BooleanField("人脸信息是否已被采集", blank=True, default=False)
 
     @classmethod
     def get_all(cls):
@@ -117,6 +119,7 @@ class Volunteer(models.Model):
     updateby = models.IntegerField("更新人", blank=True, null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
     data = models.JSONField("人脸数据", null=True, blank=True)
+    face_colleceted = models.BooleanField("人脸信息是否已被采集", blank=True, default=False)
 
     @classmethod
     def get_all(cls):

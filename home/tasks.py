@@ -38,6 +38,8 @@ def face_reg(channel_name, pid, type, base64_arr):
         print(str(instance) + "is saving")
         instance.save()
         print("save done")
+        async_to_sync(channel_layer.send)(channel_name,
+                                          {"type": "chat.message", "message": "success"})
 
 # @shared_task
 # def search(channel_name, name):
