@@ -105,25 +105,25 @@ class EventModelView(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class GetFaceView(viewsets.GenericViewSet,
-                  mixins.ListModelMixin):
-
-    permission_classes = [AllowAny]
-    authentication_classes = []
-    serializer_class = ImgSerializer
-
-    def list(self, request, *args, **kwargs):
-        old = OldPerson.get_all()
-        vlt = Volunteer.get_all()
-        emp = Employee.get_all()
-        ser = self.get_serializer_class()
-        old_data = ser(instance=old, many=True).data
-        vlt_data = ser(instance=vlt, many=True).data
-        emp_data = ser(instance=emp, many=True).data
-        return Response(data={
-            "old_people": old_data,
-            "volunteer": vlt_data,
-            "employee": emp_data
-        }, status=status.HTTP_200_OK)
+# class GetFaceView(viewsets.GenericViewSet,
+#                   mixins.ListModelMixin):
+#
+#     permission_classes = [AllowAny]
+#     authentication_classes = []
+#     serializer_class = ImgSerializer
+#
+#     def list(self, request, *args, **kwargs):
+#         old = OldPerson.get_all()
+#         vlt = Volunteer.get_all()
+#         emp = Employee.get_all()
+#         ser = self.get_serializer_class()
+#         old_data = ser(instance=old, many=True).data
+#         vlt_data = ser(instance=vlt, many=True).data
+#         emp_data = ser(instance=emp, many=True).data
+#         return Response(data={
+#             "old_people": old_data,
+#             "volunteer": vlt_data,
+#             "employee": emp_data
+#         }, status=status.HTTP_200_OK)
 
 
