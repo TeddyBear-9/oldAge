@@ -28,15 +28,15 @@ def face_reg(channel_name, pid, type, base64_arr):
 
     print(instance)
 
-    if instance is None:
-        print("person type error")
-        async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": "The person type is illegal"})
-    else:
-        instance.data = {
-            'base64': base64_arr
-        }
-        print(str(instance) + "is saving")
-        instance.save()
-        print("save done")
-        async_to_sync(channel_layer.send)(channel_name,
-                                          {"type": "chat.message", "message": "success"})
+    # if instance is None:
+    #     print("person type error")
+    #     async_to_sync(channel_layer.send)(channel_name, {"type": "chat.message", "message": "The person type is illegal"})
+    # else:
+    #     instance.data = {
+    #         'base64': base64_arr
+    #     }
+    #     print(str(instance) + "is saving")
+    #     instance.save()
+    #     print("save done")
+    #     async_to_sync(channel_layer.send)(channel_name,
+    #                                       {"type": "chat.message", "message": "success"})

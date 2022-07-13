@@ -35,7 +35,7 @@ class OldPerson(models.Model):
     # imgset_dir = models.CharField(max_length=200)
     # profile_photo = models.CharField(max_length=200)
     room_number = models.CharField(max_length=50, verbose_name="房间号", null=True, blank=True)
-    data = models.JSONField("人脸数据", null=True, blank=True)
+    # data = models.JSONField("人脸数据", null=True, blank=True)
 
     firstguardian_name = models.CharField(max_length=50, null=True, blank=True, verbose_name="第一监护人姓名")
     firstguardian_relationship = models.CharField(max_length=50, verbose_name="与第一监护人关系", null=True, blank=True)
@@ -86,7 +86,7 @@ class Employee(models.Model):
     updated = models.DateTimeField("更新时间", auto_now=True, null=True)
     updateby = models.IntegerField("更新人", null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
-    data = models.JSONField("人脸数据", null=True, blank=True)
+    # data = models.JSONField("人脸数据", null=True, blank=True)
     face_colleceted = models.BooleanField("人脸信息是否已被采集", blank=True, default=False)
 
     @classmethod
@@ -118,7 +118,7 @@ class Volunteer(models.Model):
     updated = models.DateTimeField("更新时间", auto_now=True, null=True)
     updateby = models.IntegerField("更新人", blank=True, null=True)
     remove = models.CharField("移除标志", max_length=5, choices=REMOVE_ITEMS, default="正常")
-    data = models.JSONField("人脸数据", null=True, blank=True)
+    # data = models.JSONField("人脸数据", null=True, blank=True)
     face_colleceted = models.BooleanField("人脸信息是否已被采集", blank=True, default=False)
 
     @classmethod
