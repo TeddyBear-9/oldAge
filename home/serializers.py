@@ -65,9 +65,7 @@ class VolunteerSerializer(serializers.ModelSerializer):
         read_only = [
             'id'
         ]
-        exclude = [
-            'data',
-        ]
+
 
 
 class EventSerializer(serializers.ModelSerializer):
