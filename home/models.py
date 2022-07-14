@@ -75,8 +75,8 @@ class Employee(models.Model):
     phone = models.CharField(max_length=50, verbose_name="职工电话")
     id_card = models.CharField(max_length=50, verbose_name="职工身份证号")
     birthday = models.DateField(default="1950-01-01", verbose_name="职工生日")
-    hire_date = models.DateTimeField(verbose_name="入职时间", null=True)
-    resigh_date = models.DateTimeField(verbose_name="离职时间", null=True)
+    hire_date = models.DateTimeField(verbose_name="入职时间", null=True, blank=True)
+    resigh_date = models.DateTimeField(verbose_name="离职时间", null=True, blank=True)
     profile_photo = models.ImageField('职工头像', upload_to='photo/employee', default='', blank=True, null=True)
 
     description = models.CharField("描述", max_length=50, null=True)
