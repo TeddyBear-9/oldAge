@@ -19,5 +19,5 @@ def send_notification(sender, **kwargs):
     event_data = EventSerializer(instance).data
     async_to_sync(channel_layer.send)(channel_name,
                                       {"type": "send_event", "event": event_data})
-    # send_event(channel_name, event_data)
+    send_event(channel_name, event_data)
 
