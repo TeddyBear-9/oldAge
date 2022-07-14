@@ -48,13 +48,15 @@ class ImgSerializer(serializers.Serializer):
     username = serializers.CharField()
     data = serializers.JSONField()
 
+
 class EmpolyeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
         fields = "__all__"
         read_only = [
-            'id'
+            'id',
+            'remove',
         ]
 
 
@@ -64,9 +66,9 @@ class VolunteerSerializer(serializers.ModelSerializer):
         model = Volunteer
         fields = "__all__"
         read_only = [
-            'id'
+            'id',
+            'remove',
         ]
-
 
 
 class EventSerializer(serializers.ModelSerializer):

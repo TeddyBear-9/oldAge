@@ -91,7 +91,7 @@ class Employee(models.Model):
 
     @classmethod
     def get_all(cls):
-        return cls.objects.all()
+        return cls.objects.all().filter(remove="正常")
 
     def __str__(self):
         return '<Employee: {}>'.format(self.username)
@@ -123,7 +123,7 @@ class Volunteer(models.Model):
 
     @classmethod
     def get_all(cls):
-        return cls.objects.all()
+        return cls.objects.all().filter(remove="正常")
 
     def __str__(self):
         return '<Volunteer: {}>'.format(self.username)
@@ -220,7 +220,7 @@ class SystemUser(AbstractUser):
 
     @classmethod
     def get_all(cls):
-        return cls.objects.all()
+        return cls.objects.all().filter(remove="正常")
 
     # @property
     # def is_authenticated(self):
