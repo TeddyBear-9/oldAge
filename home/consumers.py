@@ -117,15 +117,15 @@ class FaceRegConsumer(WebsocketConsumer):
 
 class RoomEventConsumer(WebsocketConsumer):
     def connect(self):
-        # user = SystemUser.objects.get(pk=2)
-        # user.room_channel_name = self.channel_name
-        # user.save()
+        user = SystemUser.objects.get(pk=2)
+        user.room_channel_name = self.channel_name
+        user.save()
         self.accept()
 
     def disconnect(self, close_code):
-        # user = SystemUser.objects.get(pk=2)
-        # user.room_channel_name = None
-        # user.save()
+        user = SystemUser.objects.get(pk=2)
+        user.room_channel_name = None
+        user.save()
         pass
 
     def receive(self, text_data=None, bytes_data=None):

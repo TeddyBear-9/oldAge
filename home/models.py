@@ -212,7 +212,7 @@ class SystemUser(AbstractUser):
     logoimage = models.CharField("Logo", max_length=45, blank=True, null=True)
     appversion = models.CharField("app版本", max_length=10, blank=True, null=True)
     jsonauth = models.CharField("app版本控制，json串中的权限点配置", max_length=1000, blank=True, null=True)
-    # room_channel_name = models.CharField("房间wb通话名", max_length=100, null=True, blank=True, help_text="用于处理信号机制时，发送wb消息")
+    room_channel_name = models.CharField("房间wb通话名", max_length=100, null=True, blank=True, help_text="用于处理信号机制时，发送wb消息")
 
 
     USERNAME_FIELD = 'email'
